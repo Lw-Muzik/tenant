@@ -1,36 +1,45 @@
 {
   "project_info": {
-    "project_number": "1022378897645",
-    "project_id": "nyumba-yo",
-    "storage_bucket": "nyumba-yo.appspot.com"
+    "project_number": "99592013476",
+    "project_id": "nyumba-5ea4f",
+    "storage_bucket": "nyumba-5ea4f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1022378897645:android:ece8ddf5ae7aa7ead05ce4",
+        "mobilesdk_app_id": "1:99592013476:android:acb7a672c0139a615d8831",
         "android_client_info": {
-          "package_name": "com.app.tenant"
+          "package_name": "com.app.landlord"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1022378897645-126s2qok3655gqd8hit0mmlqihlvoc0i.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC3B_xfoQdx_M4aHfjlNh3Ex9K4KOQxdj4"
+          "current_key": "AIzaSyDdiFIj8uYywj7FHqX_ful0358DRowIgxg"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1022378897645-126s2qok3655gqd8hit0mmlqihlvoc0i.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99592013476:android:cfcdb88a0c5320c85d8831",
+        "android_client_info": {
+          "package_name": "com.app.tenant"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdiFIj8uYywj7FHqX_ful0358DRowIgxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     }

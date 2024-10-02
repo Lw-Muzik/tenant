@@ -1,7 +1,6 @@
-import '../reports/GraphicalReport.dart';
 import '/exports/exports.dart';
 
-import 'Home.dart';
+// import 'Home.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -27,43 +26,42 @@ class _DashboardState extends State<Dashboard> {
     "Complaints",
     "Profile",
   ];
-  int _page = 0;
+  // int _page = 0;
   // pages
-  List<Widget> pages = [const Home(), const Complaint(), const ProfileScreen()];
+  List<Widget> pages = [const Complaint()];
 
   final _pageController = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: PageView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _pageController,
-          children: pages,
-        ),
+      body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: _pageController,
+        children: pages,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 2,
-        backgroundColor: Colors.grey.shade300,
-        showSelectedLabels: true,
-        unselectedLabelStyle: TextStyles(context).getRegularStyle().copyWith(
-          fontSize: 12
-        ), selectedLabelStyle: TextStyles(context).getRegularStyle().copyWith(
-          fontSize: 12
-        ),
-        currentIndex:_page ,
-        onTap: (x){
-          setState(() {
-            _page = x;
-          });
-          _pageController.animateToPage(x, duration: const Duration(milliseconds: 500), curve: Curves.easeInSine);
-        },
-        items: List.generate(
-          3,
-          (index) =>
-              BottomNavigationBarItem(icon: icons[index], label: labels[index]),
-        ),
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   elevation: 2,
+      //   backgroundColor: Colors.grey.shade300,
+      //   showSelectedLabels: true,
+      //   unselectedLabelStyle:
+      //       TextStyles(context).getRegularStyle().copyWith(fontSize: 12),
+      //   selectedLabelStyle:
+      //       TextStyles(context).getRegularStyle().copyWith(fontSize: 12),
+      //   currentIndex: _page,
+      //   onTap: (x) {
+      //     setState(() {
+      //       _page = x;
+      //     });
+      //     _pageController.animateToPage(x,
+      //         duration: const Duration(milliseconds: 500),
+      //         curve: Curves.easeInSine);
+      //   },
+      //   items: List.generate(
+      //     3,
+      //     (index) =>
+      //         BottomNavigationBarItem(icon: icons[index], label: labels[index]),
+      //   ),
+      // ),
     );
   }
 }

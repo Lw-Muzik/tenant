@@ -64,7 +64,7 @@ class _LoaderState extends State<Loader> with TickerProviderStateMixin {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SpinKitDualRing(color: Theme.of(context).primaryColor),
+        SpinKitDualRing(color: Theme.of(context).primaryColorDark),
         Padding(
           padding: const EdgeInsets.all(28.0),
           child: Text(

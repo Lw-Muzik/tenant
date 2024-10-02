@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, deprecated_member_use
 
 import 'dart:async';
 
@@ -13,7 +13,17 @@ import 'package:firebase_core/firebase_core.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
- 
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      // statusBarColor: Colors.transparent,
+      // statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.black12,
+      systemNavigationBarDividerColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: []);
+
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   const AndroidInitializationSettings initializationSettingsAndroid =
@@ -32,11 +42,10 @@ Future<void> main() async {
   flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
-      ?.requestPermission();
+      ?.requestNotificationsPermission();
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onDidReceiveNotificationResponse: (payload) async {
-  });
+      onDidReceiveNotificationResponse: (payload) async {});
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -44,9 +53,7 @@ Future<void> main() async {
 
   // firebase messaging
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
-  FirebaseMessaging.onMessage.listen((event) {
-    
-  });
+  FirebaseMessaging.onMessage.listen((event) {});
 
   // end of firebase messaging
   Timer.periodic(const Duration(seconds: 7), (timer) {
@@ -64,30 +71,30 @@ Future<void> main() async {
           BlocProvider(create: (_) => PowerBillController()),
           ChangeNotifierProvider(create: (_) => MainController()),
         ],
-        child: Builder(
-          builder: (context) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              initialRoute: Routes.splash,
-               theme: ThemeData().copyWith(
-                    appBarTheme: const AppBarTheme(backgroundColor: Colors.blue),
-                    colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 5, 70, 150)),
-                    useMaterial3: true,
-                    textTheme:
-                        GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
-                            .apply(
-                      bodyColor: ThemeData().brightness == Brightness.light
-                          ? Colors.black
-                          : Colors.white,
-                      displayColor: ThemeData().brightness == Brightness.light
-                          ? Colors.black
-                          : Colors.white,
-                    ),
-                  ),
-              routes: Routes.routes,
-            );
-          }
-        ),
+        child: Builder(builder: (context) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            initialRoute: Routes.splash,
+            theme: ThemeData().copyWith(
+              appBarTheme: const AppBarTheme(backgroundColor: Colors.blue),
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.blue.shade700,
+              ),
+              // useMaterial3: true,
+              textTheme:
+                  GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
+                      .apply(
+                bodyColor: ThemeData().brightness == Brightness.light
+                    ? Colors.black
+                    : Colors.white,
+                displayColor: ThemeData().brightness == Brightness.light
+                    ? Colors.black
+                    : Colors.white,
+              ),
+            ),
+            routes: Routes.routes,
+          );
+        }),
       ),
     ),
   );

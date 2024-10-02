@@ -69,7 +69,7 @@ showAlertMsg(BuildContext context, {String content = "", String title = ""}) {
 
 /// show progress widget
 void showProgress(BuildContext context, {String? text = 'Task'}) {
-   showDialog(
+  showDialog(
     context: context,
     builder: (context) => Dialog(
       backgroundColor: Colors.transparent,
@@ -114,7 +114,7 @@ Future<void> requestPermissions() async {
         flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>();
 
-    await androidImplementation?.requestPermission();
+    await androidImplementation?.requestNotificationsPermission();
     // setState(() {
     //   _notificationsEnabled = granted ?? false;
     // });
@@ -157,11 +157,14 @@ Future<File> captureImage() async {
 
 // function to determine the tenant's end of month
 String getEndOfMonth(DateTime date) {
-  DateTime registrationDate = DateTime(2023, 6, 15); // Replace with the tenant's registration date
-  DateTime nextMonth = DateTime(registrationDate.year, registrationDate.month + 1, 1);
+  DateTime registrationDate =
+      DateTime(2023, 6, 15); // Replace with the tenant's registration date
+  DateTime nextMonth =
+      DateTime(registrationDate.year, registrationDate.month + 1, 1);
   DateTime endOfMonth = nextMonth.subtract(const Duration(days: 1));
   return DateFormat('dd-MM-yyyy').format(endOfMonth);
 }
+
 String getTimeAgo(DateTime dateTime) {
   final now = DateTime.now();
   final difference = now.difference(dateTime);
@@ -181,11 +184,13 @@ String getTimeAgo(DateTime dateTime) {
     return formatter.format(dateTime);
   }
 }
+
 String separateZerosWithCommas(String zeros) {
   final formatter = NumberFormat("#,###");
   int value = int.parse(zeros);
   return formatter.format(value);
 }
+
 void showProgressLoader(BuildContext context) {
   showDialog(
     barrierDismissible: true,
@@ -221,27 +226,32 @@ void showProgressLoader(BuildContext context) {
 // function used to generate receipt
 Future<Uint8List> pdfFile(
     PdfPageFormat format, Map<String, dynamic> paymentData) async {
-  
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
   List<pw.Text> heads = [
-    pw.Text("Tenant's Name",style:pw.TextStyle(fontSize: 16,fontWeight: pw.FontWeight.bold)),
-    pw.Text("Date of payment",style:pw.TextStyle(fontSize: 16,fontWeight: pw.FontWeight.bold)),
-    pw.Text("Payment Gateway",style:pw.TextStyle(fontSize: 16,fontWeight: pw.FontWeight.bold)),
-    pw.Text("Amount Paid",style:pw.TextStyle(fontSize: 16,fontWeight: pw.FontWeight.bold)),
-    pw.Text("Balance",style:pw.TextStyle(fontSize: 16,fontWeight: pw.FontWeight.bold)),
-    pw.Text("Payment status",style:pw.TextStyle(fontSize: 16,fontWeight: pw.FontWeight.bold)),
+    pw.Text("Tenant's Name",
+        style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+    pw.Text("Date of payment",
+        style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+    pw.Text("Payment Gateway",
+        style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+    pw.Text("Amount Paid",
+        style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+    pw.Text("Balance",
+        style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+    pw.Text("Payment status",
+        style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
   ];
-
 
   //
   List<pw.Widget> body = [
-    pw.Text(paymentData['tenantName'],style:const pw.TextStyle(fontSize: 16)),
-    pw.Text(paymentData['date'],style:const pw.TextStyle(fontSize: 16)),
-    pw.Text(paymentData['paymentMode'],style:const pw.TextStyle(fontSize: 16)),
-    pw.Text(paymentData['amountPaid'],style:const pw.TextStyle(fontSize: 16)),
-    pw.Text(paymentData['balance'],style:const pw.TextStyle(fontSize: 16)),
-    pw.Text(paymentData['paymentStatus'],style:const pw.TextStyle(fontSize: 16)),
-    
+    pw.Text(paymentData['tenantName'], style: const pw.TextStyle(fontSize: 16)),
+    pw.Text(paymentData['date'], style: const pw.TextStyle(fontSize: 16)),
+    pw.Text(paymentData['paymentMode'],
+        style: const pw.TextStyle(fontSize: 16)),
+    pw.Text(paymentData['amountPaid'], style: const pw.TextStyle(fontSize: 16)),
+    pw.Text(paymentData['balance'], style: const pw.TextStyle(fontSize: 16)),
+    pw.Text(paymentData['paymentStatus'],
+        style: const pw.TextStyle(fontSize: 16)),
   ];
   pdf.addPage(
     pw.Page(
@@ -251,7 +261,7 @@ Future<Uint8List> pdfFile(
         padding: const pw.EdgeInsets.all(10),
         child: pw.Column(
           children: [
-                  pw.Center(
+            pw.Center(
                 child: pw.Text((paymentData['property']),
                     style: pw.TextStyle(
                         fontSize: 20, fontWeight: pw.FontWeight.bold))),
@@ -260,8 +270,9 @@ Future<Uint8List> pdfFile(
               child: pw.PdfLogo(),
             ),
             pw.SizedBox(height: 50),
-            pw.Signature(name: "NyumbaYo Tenant",),
-      
+            pw.Signature(
+              name: "NyumbaYo Tenant",
+            ),
             pw.Center(
                 child: pw.Text("Payment receipt",
                     style: pw.TextStyle(
@@ -286,15 +297,12 @@ Future<Uint8List> pdfFile(
                 ),
               ),
             ),
-         pw.Divider()
+            pw.Divider()
           ],
         ),
       )),
     ),
-    
   );
 
   return pdf.save();
 }
-
-

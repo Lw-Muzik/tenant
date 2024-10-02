@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import '/exports/exports.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -11,9 +13,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   initState() {
     BlocProvider.of<UserdataController>(context).captureData();
-     BlocProvider.of<UserdataController>(context).getUserData();
+    BlocProvider.of<UserdataController>(context).getUserData();
 
-    Future.delayed(const Duration(seconds: 3)).then((value) {
+    Future.delayed(const Duration(seconds: 2)).then((value) {
       BlocProvider.of<UserdataController>(context).getUserData();
       InternetConnectionChecker.createInstance().hasConnection.then((value) {
         if (value == false) {
@@ -38,12 +40,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-   
- BlocProvider.of<UserdataController>(context).captureData();
- BlocProvider.of<UserdataController>(context).getUserData();
- if (BlocProvider.of<UserdataController>(context).state.isNotEmpty) {
-     BlocProvider.of<TenantController>(context).fetchTenants(context.read<UserdataController>().state);
- }
+    BlocProvider.of<UserdataController>(context).captureData();
+    BlocProvider.of<UserdataController>(context).getUserData();
+    if (BlocProvider.of<UserdataController>(context).state.isNotEmpty) {
+      BlocProvider.of<TenantController>(context)
+          .fetchTenants(context.read<UserdataController>().state);
+    }
 
     return Builder(
       // future: Future.delayed(const Duration(seconds: 3)),
@@ -59,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: Image.asset("assets/images/house.png"),
                 ),
                 const Space(space: 0.05),
-                SpinKitDualRing(color: Theme.of(context).primaryColor),
+                SpinKitDualRing(color: Theme.of(context).primaryColorDark),
                 const Space(space: 0.05),
                 Text(
                   FirebaseAuth.instance.currentUser == null

@@ -1,4 +1,6 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
+
+import 'dart:developer';
 
 import '../../backend/auth.dart';
 import '/exports/exports.dart';
@@ -35,7 +37,7 @@ class _LoginState extends State<Login> {
                 padding: const EdgeInsets.all(28.0),
                 child: Text(
                   "Login",
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontSize: 50,
                       color: Colors.black,
                       fontWeight: FontWeight.w200),
@@ -119,7 +121,8 @@ class _LoginState extends State<Login> {
               ),
               CommonButton(
                 padding: padding,
-                height: 50,
+                height: 55,
+                backgroundColor: Theme.of(context).primaryColorDark,
                 buttonText: "Login",
                 onTap: () {
                   // check if all fields are detailed with data
@@ -134,23 +137,28 @@ class _LoginState extends State<Login> {
                     showProgress(context, text: "Logging in please wait...");
                     Auth.login(emailController.text, passwordController.text)
                         .then((value) {
-                          Routes.pop(context);
-                      if (FirebaseAuth
-                              .instance.currentUser?.emailVerified ==
+                      // log(value.user?.uid ??s "");
+                      Routes.pop(context);
+                      if (FirebaseAuth.instance.currentUser?.emailVerified ==
                           false) {
                         Routes.named(context, Routes.verify);
                       } else {
                         BlocProvider.of<UserdataController>(context)
                             .captureData();
-                        
+
                         Routes.routeUntil(context, Routes.dashboard);
-                          showMessage(
-                          context: context, msg: "Logged in Successfully");
+                        showMessage(
+                            context: context, msg: "Logged in Successfully");
                       }
+                    }).onError((error, x) {
+                      Routes.pop(context);
+                      showMessage(
+                          context: context,
+                          msg: error.toString(),
+                          type: 'danger');
                     }).whenComplete(() {
                       BlocProvider.of<UserdataController>(context)
                           .captureData();
-                    
                     });
                   }
                 },

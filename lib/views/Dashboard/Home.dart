@@ -1,10 +1,8 @@
-import 'package:nyumbayo_app/views/Inventory/Preview.dart';
-import 'package:nyumbayo_app/views/reports/GraphicalReport.dart';
+import '/views/Inventory/Preview.dart';
+import '/views/reports/GraphicalReport.dart';
 
 import '../../controllers/PowerBillController.dart';
-import '../Inventory/Inventory.dart';
 import '/exports/exports.dart';
-import '/views/payments/payment.dart';
 import 'widgets/DashboardHeader.dart';
 import 'widgets/MiniDashboard.dart';
 
@@ -48,9 +46,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     // power consumed
     context.watch<MainController>().fetchPowerConsumed();
     BlocProvider.of<UserdataController>(context).getUserData();
-    BlocProvider.of<TenantController>(context, listen: true).fetchTenants(context.read<UserdataController>().state);;
+    BlocProvider.of<TenantController>(context, listen: true)
+        .fetchTenants(context.read<UserdataController>().state);
+    ;
     BlocProvider.of<PowerBillController>(context).getSavePowerBill();
-        
+
     // computations for balance
     // int balance = int.parse(context.read<TenantController>().state['balance']);
     int amountPaid =
@@ -59,13 +59,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         int.parse(context.read<TenantController>().state['monthlyRent'] ?? "0");
     // computes percentage
     double percentage = ((amountPaid) / (amountToPay)) * 100;
-   
+
     // logic for tunning on or off power
-    if ((percentage.isNaN == false && percentage >= 80 && context.read<PowerBillController>().state < 5000)) {
+    if ((percentage.isNaN == false &&
+        percentage >= 80 &&
+        context.read<PowerBillController>().state < 5000)) {
       Provider.of<MainController>(context, listen: true).controlPower(
           context.read<UserdataController>().state, percentage.toInt(),
           x: 1);
-    } else if ((percentage.isNaN == false && percentage < 80 && context.read<PowerBillController>().state > 5000)) {
+    } else if ((percentage.isNaN == false &&
+        percentage < 80 &&
+        context.read<PowerBillController>().state > 5000)) {
       Provider.of<MainController>(context, listen: true).controlPower(
           context.read<UserdataController>().state, percentage.toInt(),
           x: 0);
@@ -76,13 +80,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-              // dashboard header
-              const DashboardHeader(),
-              // end of dashboard header
-              const MiniDashBoard(),
-              // mini dashboard
+            // dashboard header
+            const DashboardHeader(),
+            // end of dashboard header
+            const MiniDashBoard(),
+            // mini dashboard
 
-              // end of mini dashboard
+            // end of mini dashboard
             // pending balances
             const Padding(
               padding: EdgeInsets.all(18.0),
@@ -96,7 +100,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 padding: const EdgeInsets.all(5.0),
                 child: Card(
                   child: ListTile(
-
                     leading: Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
@@ -105,7 +108,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             fontWeight: FontWeight.w500, fontSize: 15),
                       ),
                     ),
-
                     title: const Text(
                       "Rent Payment",
                       style: TextStyle(
@@ -113,9 +115,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         fontSize: 17,
                       ),
                     ),
-
                     subtitle: const Text("Pay your dues"),
-
                     trailing: RichText(
                       text: TextSpan(
                         text: "Paid",
@@ -134,11 +134,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             ),
                           ),
                           TextSpan(
-                            text: context.read<TenantController>().state.isNotEmpty ? "\n${formatDate(
-                              DateTime.parse(
-                                context.read<TenantController>().state['date'],
-                              ),
-                            )}" : "",
+                            text: context
+                                    .read<TenantController>()
+                                    .state
+                                    .isNotEmpty
+                                ? "\n${formatDate(
+                                    DateTime.parse(
+                                      context
+                                          .read<TenantController>()
+                                          .state['date'],
+                                    ),
+                                  )}"
+                                : "",
                             style: const TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.w400,
@@ -155,15 +162,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Card(
-
                   child: ListTile(
-                    
                     leading: Icon(
                       Icons.electric_bolt_sharp,
                       color: Colors.blue.shade600,
                       size: 40,
                     ),
-
                     title: const Text(
                       "Electricity Payment",
                       style: TextStyle(
@@ -254,7 +258,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ),
                 ),
               ),
-               if (context.read<TenantController>().state['power_fee'] != "0")
+            if (context.read<TenantController>().state['power_fee'] != "0")
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Card(
@@ -274,7 +278,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     subtitle: const Text(
                       "Thank you for paying",
                     ),
-                    trailing:  Text(
+                    trailing: Text(
                       "UGX ${context.read<TenantController>().state['power_fee']}",
                       style: const TextStyle(
                         fontSize: 16,
@@ -313,7 +317,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 label: const Text("Analytics"),
               ),
             ),
-            
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: FloatingActionButton.extended(

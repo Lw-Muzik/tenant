@@ -4,12 +4,10 @@ import 'package:nyumbayo_app/constants/sizes.dart';
 import 'package:nyumbayo_app/views/profile/profile_menu.dart';
 
 import '/backend/auth.dart';
-import '/constants/text_strings.dart';
 import '/exports/exports.dart';
 
-
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -19,6 +17,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Profile"),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(tDefaultSize),
@@ -57,15 +59,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onPress: () {},
                 endIcon: false,
               ),
-            
               ProfileMenuWidget(
                 title: "logout",
                 icon: Icons.logout,
                 endIcon: false,
                 onPress: () {
                   showProgress(context, text: "Logging out...");
-                  Auth.signOut().then((value) {
-                  }).whenComplete(() {
+                  Auth.signOut().then((value) {}).whenComplete(() {
                     Routes.routeUntil(context, Routes.login);
                     showMessage(
                         context: context,
@@ -74,14 +74,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   });
                 },
               ),
-                ProfileMenuWidget(
+              ProfileMenuWidget(
                 title: "Exit",
                 icon: Icons.exit_to_app,
                 onPress: () => exit(0),
                 endIcon: false,
               ),
-             Space(space: 0.03),
-             Divider()
+              Space(space: 0.03),
+              Divider()
             ],
           ),
         ),

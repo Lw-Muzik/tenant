@@ -12,18 +12,18 @@ class Auth {
         email: email, password: password);
   }
 
-  static Future<AuthStatus?> login(
+  static Future<Object> login(
     String email,
     String password,
   ) async {
-    AuthStatus? status;
+    // AuthStatus? status;
     final auth = FirebaseAuth.instance;
     try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
+      return await auth.signInWithEmailAndPassword(
+          email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      status = AuthExceptionHandler.handleAuthException(e);
+      return AuthExceptionHandler.handleAuthException(e);
     }
-    return status;
   }
 
   static Future<void> signOut() async {

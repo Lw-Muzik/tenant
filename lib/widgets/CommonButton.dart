@@ -37,11 +37,11 @@ class CommonButton extends StatelessWidget {
           child: Card(
             shape: RoundedRectangleBorder(
               side: enableBorder
-                  ? BorderSide(color: Colors.white60)
+                  ? const BorderSide(color: Colors.white60)
                   : BorderSide.none,
               borderRadius: BorderRadius.circular(radius),
             ),
-            color: backgroundColor ?? Theme.of(context).primaryColor,
+            color: backgroundColor ?? Theme.of(context).primaryColorDark,
             shadowColor: Colors.black12.withOpacity(
               Theme.of(context).brightness == Brightness.dark ? 0.6 : 0.2,
             ),
