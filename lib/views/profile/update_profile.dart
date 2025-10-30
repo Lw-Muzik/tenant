@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 // ignore: import_of_legacy_library_into_null_safe
 // import 'package:line_awesome_icons/line_awesome_icons.dart';
-import 'package:nyumbayo_app/constants/colors.dart';
-import 'package:nyumbayo_app/constants/sizes.dart';
-import 'package:nyumbayo_app/constants/text_strings.dart';
-// import 'package:nyumbayo_app/constants/colors.dart';
-import 'package:nyumbayo_app/constants/image.dart';
-import 'package:nyumbayo_app/views/profile/profile_screen.dart';
-// import 'package:nyumbayo_app/constants/sizes.dart';
+import '/constants/colors.dart';
+import '/constants/sizes.dart';
+import '/constants/text_strings.dart';
+// import '/constants/colors.dart';
+import '/constants/image.dart';
+import '/views/profile/profile_screen.dart';
+// import '/constants/sizes.dart';
 
 // import '../../constants/text_strings.dart';
 //import '../Auth/forgot_password/forgot_password_btn_widget.dart';
@@ -21,9 +21,13 @@ class UpdateProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => Get.back(), icon: const Icon(Icons.arrow_left)),
-        title: Text(tEditProfile,
-            style: Theme.of(context).textTheme.headlineMedium),
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_left),
+        ),
+        title: Text(
+          tEditProfile,
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -47,8 +51,9 @@ class UpdateProfileScreen extends StatelessWidget {
                       width: 35,
                       height: 35,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(100),
+                        color: Theme.of(context).primaryColor,
+                      ),
                       child: const Icon(
                         Icons.camera,
                         color: Colors.black,
@@ -68,9 +73,7 @@ class UpdateProfileScreen extends StatelessWidget {
                         prefixIcon: Icon(Icons.person_2_outlined),
                       ),
                     ),
-                    const SizedBox(
-                      height: tFormHeight - 20,
-                    ),
+                    const SizedBox(height: tFormHeight - 20),
                     TextFormField(
                       decoration: const InputDecoration(
                         label: Text(tEmail),
@@ -102,14 +105,18 @@ class UpdateProfileScreen extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () => Get.to(() => const ProfileScreen()),
+                        onPressed: () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ProfileScreen(),
+                          ),
+                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).primaryColor,
                           side: BorderSide.none,
                           shape: const StadiumBorder(),
                         ),
-                        child: const Text(tEditProfile,
-                           ),
+                        child: const Text(tEditProfile),
                       ),
                     ),
                   ],

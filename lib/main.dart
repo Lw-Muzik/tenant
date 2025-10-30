@@ -2,8 +2,7 @@
 
 import 'dart:async';
 
-import 'package:nyumbayo_app/tools/Reload.dart';
-
+import '/tools/Reload.dart';
 import 'Observers/IntervalObserver.dart';
 import 'controllers/PowerBillController.dart';
 import 'firebase_options.dart';
@@ -36,20 +35,22 @@ Future<void> main() async {
 
   // initialization settings for both Android and iOS
   InitializationSettings initializationSettings = const InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: initializationSettingsDarwin);
+    android: initializationSettingsAndroid,
+    iOS: initializationSettingsDarwin,
+  );
 
   flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
+        AndroidFlutterLocalNotificationsPlugin
+      >()
       ?.requestNotificationsPermission();
 
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onDidReceiveNotificationResponse: (payload) async {});
-
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+    onDidReceiveNotificationResponse: (payload) async {},
   );
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // firebase messaging
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
@@ -71,30 +72,33 @@ Future<void> main() async {
           BlocProvider(create: (_) => PowerBillController()),
           ChangeNotifierProvider(create: (_) => MainController()),
         ],
-        child: Builder(builder: (context) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            initialRoute: Routes.splash,
-            theme: ThemeData().copyWith(
-              appBarTheme: const AppBarTheme(backgroundColor: Colors.blue),
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: Colors.blue.shade700,
+        child: Builder(
+          builder: (context) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              initialRoute: Routes.splash,
+              theme: ThemeData().copyWith(
+                appBarTheme: const AppBarTheme(backgroundColor: Colors.blue),
+                colorScheme: ColorScheme.fromSeed(
+                  seedColor: Colors.blue.shade700,
+                ),
+                // useMaterial3: true,
+                textTheme:
+                    GoogleFonts.poppinsTextTheme(
+                      Theme.of(context).textTheme,
+                    ).apply(
+                      bodyColor: ThemeData().brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      displayColor: ThemeData().brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                    ),
               ),
-              // useMaterial3: true,
-              textTheme:
-                  GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
-                      .apply(
-                bodyColor: ThemeData().brightness == Brightness.light
-                    ? Colors.black
-                    : Colors.white,
-                displayColor: ThemeData().brightness == Brightness.light
-                    ? Colors.black
-                    : Colors.white,
-              ),
-            ),
-            routes: Routes.routes,
-          );
-        }),
+              routes: Routes.routes,
+            );
+          },
+        ),
       ),
     ),
   );

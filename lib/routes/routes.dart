@@ -1,6 +1,4 @@
-
-
-import 'package:nyumbayo_app/views/Auth/splash_screen.dart';
+import '/views/Auth/splash_screen.dart';
 import '../views/Auth/VerifyAccount.dart';
 import '/views/Auth/ForgotPassword.dart';
 import '/views/Auth/MessagePage.dart';
@@ -33,29 +31,31 @@ class Routes {
       ),
     );
   }
+
   // pop off widget
-  static void pop(BuildContext context){
+  static void pop(BuildContext context) {
     Navigator.of(context).pop();
   }
 
   // route without return
-  static void routeUntil(BuildContext context, String route){
+  static void routeUntil(BuildContext context, String route) {
     Navigator.of(context).pushReplacementNamed(route);
   }
+
   // named routes
-  static void named(BuildContext context, String route){
+  static void named(BuildContext context, String route) {
     Navigator.of(context).pushNamed(route);
   }
+
   // routes
-  static Map<String, Widget Function(BuildContext)> routes =
-     {
-      Routes.login: (context) => const Login(),
-      Routes.dashboard: (context) => const Dashboard(),
-      Routes.complaints: (context) => const Complaint(),
-      Routes.splash:(context) => const SplashScreen(),
-      Routes.forgotPassword: (context) => ForgotPassword(),
-      Routes.messagePage: (context) => const MessagePage(),
-      Routes.offline: (context) => const OfflineView(),
-      Routes.verify: (context) => const VerifyAccount(),
+  static Map<String, Widget Function(BuildContext)> routes = {
+    Routes.login: (context) => const Login(),
+    Routes.dashboard: (context) => const Dashboard(),
+    Routes.complaints: (context) => const Complaint(),
+    Routes.splash: (context) => const SplashScreen(),
+    Routes.forgotPassword: (context) => ForgotPassword(),
+    Routes.messagePage: (context) => const MessagePage(),
+    Routes.offline: (context) => const OfflineView(),
+    Routes.verify: (context) => const VerifyAccount(),
   };
 }

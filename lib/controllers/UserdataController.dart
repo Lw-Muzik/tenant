@@ -1,17 +1,18 @@
-import 'package:nyumbayo_app/exports/exports.dart';
+import '/exports/exports.dart';
 
 class UserdataController extends Cubit<String> {
   UserdataController() : super("");
-// capture user data
-  void captureData(){
-  SharedPreferences.getInstance().then((value) {
-    value.setString("tenantId",FirebaseAuth.instance.currentUser?.uid ?? "");
-    emit(FirebaseAuth.instance.currentUser?.uid ?? "");
-  });
+  // capture user data
+  void captureData() {
+    SharedPreferences.getInstance().then((value) {
+      value.setString("tenantId", FirebaseAuth.instance.currentUser?.uid ?? "");
+      emit(FirebaseAuth.instance.currentUser?.uid ?? "");
+    });
   }
-  getUserData(){
+
+  getUserData() {
     SharedPreferences.getInstance().then((userData) {
-      emit(userData.getString("tenantId")?? "");
+      emit(userData.getString("tenantId") ?? "");
     });
   }
 }

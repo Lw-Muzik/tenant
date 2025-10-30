@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:nyumbayo_app/constants/sizes.dart';
-import 'package:nyumbayo_app/views/profile/profile_menu.dart';
+import '/constants/sizes.dart';
+import '/views/profile/profile_menu.dart';
 
 import '/backend/auth.dart';
 import '/exports/exports.dart';
@@ -17,10 +17,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Profile"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text("Profile"), centerTitle: true),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(tDefaultSize),
@@ -32,17 +29,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     backgroundColor: Colors.blue.shade100,
                     radius: 50,
                     child: Text(
-                        "${context.read<TenantController>().state['name'].split(" ")[0].toString().characters.first.toUpperCase()}${context.read<TenantController>().state['name'].split(" ")[1].toString().characters.first.toUpperCase()}",
-                        style: const TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold)),
+                      "${context.read<TenantController>().state['name'].split(" ")[0].toString().characters.first.toUpperCase()}${context.read<TenantController>().state['name'].split(" ")[1].toString().characters.first.toUpperCase()}",
+                      style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              Text(context.read<TenantController>().state['name'],
-                  style: TextStyles(context).getTitleStyle()),
-              Text(context.read<TenantController>().state['email'],
-                  style: TextStyles(context).getRegularStyle()),
+              Text(
+                context.read<TenantController>().state['name'],
+                style: TextStyles(context).getTitleStyle(),
+              ),
+              Text(
+                context.read<TenantController>().state['email'],
+                style: TextStyles(context).getRegularStyle(),
+              ),
               const SizedBox(height: 20),
               const SizedBox(height: 30),
               const Divider(),
@@ -68,9 +72,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Auth.signOut().then((value) {}).whenComplete(() {
                     Routes.routeUntil(context, Routes.login);
                     showMessage(
-                        context: context,
-                        msg: "Logged out successfully",
-                        type: 'success');
+                      context: context,
+                      msg: "Logged out successfully",
+                      type: 'success',
+                    );
                   });
                 },
               ),
@@ -81,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 endIcon: false,
               ),
               Space(space: 0.03),
-              Divider()
+              Divider(),
             ],
           ),
         ),

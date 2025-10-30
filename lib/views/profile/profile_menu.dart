@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nyumbayo_app/exports/exports.dart';
+import '/exports/exports.dart';
 
 class ProfileMenuWidget extends StatefulWidget {
   const ProfileMenuWidget({
@@ -24,7 +24,7 @@ class ProfileMenuWidget extends StatefulWidget {
 class _ProfileMenuWidgetState extends State<ProfileMenuWidget> {
   @override
   Widget build(BuildContext context) {
-    var iconColor =  Theme.of(context).primaryColor;
+    var iconColor = Theme.of(context).primaryColor;
     return ListTile(
       onTap: widget.onPress,
       leading: Container(
@@ -36,9 +36,12 @@ class _ProfileMenuWidgetState extends State<ProfileMenuWidget> {
         ),
         child: Icon(widget.icon, color: iconColor, size: 25),
       ),
-      title: Text(widget.title,
-          style:
-              TextStyles(context).getRegularStyle().copyWith(color: widget.textColor)),
+      title: Text(
+        widget.title,
+        style: TextStyles(
+          context,
+        ).getRegularStyle().copyWith(color: widget.textColor),
+      ),
       trailing: widget.endIcon
           ? Container(
               width: 30,
@@ -47,8 +50,11 @@ class _ProfileMenuWidgetState extends State<ProfileMenuWidget> {
                 borderRadius: BorderRadius.circular(100),
                 color: Colors.grey.withOpacity(0.1),
               ),
-              child:
-                  const Icon(Icons.arrow_right, color: Colors.grey, size: 18),
+              child: const Icon(
+                Icons.arrow_right,
+                color: Colors.grey,
+                size: 18,
+              ),
             )
           : null,
     );

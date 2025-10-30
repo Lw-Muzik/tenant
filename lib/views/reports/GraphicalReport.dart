@@ -1,5 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:nyumbayo_app/exports/exports.dart';
+import '/exports/exports.dart';
 
 class MonthlyPayment {
   final String month;
@@ -32,9 +32,7 @@ class LineGraph extends StatelessWidget {
                       child: Transform.rotate(
                         angle: 45,
                         child: Text(
-                          formatDate(
-                            DateTime.parse(data[x.toInt()].month),
-                          ),
+                          formatDate(DateTime.parse(data[x.toInt()].month)),
                           style: const TextStyle(fontSize: 13),
                         ),
                       ),
@@ -57,8 +55,10 @@ class LineGraph extends StatelessWidget {
                 spots: data
                     .asMap()
                     .entries
-                    .map((entry) =>
-                        FlSpot(entry.key.toDouble(), entry.value.payment))
+                    .map(
+                      (entry) =>
+                          FlSpot(entry.key.toDouble(), entry.value.payment),
+                    )
                     .toList(),
                 isCurved: true,
                 barWidth: 2,
@@ -87,26 +87,26 @@ class _GraphicalReportState extends State<GraphicalReport> {
     List<MonthlyPayment> paymentData = [];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Monthly Payment Graph'),
-      ),
+      appBar: AppBar(title: const Text('Monthly Payment Graph')),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("payments")
-            .where("tenantId",
-                isEqualTo: context.read<UserdataController>().state)
+            .where(
+              "tenantId",
+              isEqualTo: context.read<UserdataController>().state,
+            )
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           } else {
             var d = snapshot.data?.docs;
             paymentData = List.generate(
               d!.length,
               (x) => MonthlyPayment(
-                  d[x].data()['date'], double.parse(d[x].data()['amountPaid'])),
+                d[x].data()['date'],
+                double.parse(d[x].data()['amountPaid']),
+              ),
             );
           }
           return Padding(
@@ -124,33 +124,30 @@ class _GraphicalReportState extends State<GraphicalReport> {
                     "Dates of Payment",
                     style: TextStyle(fontSize: 17),
                   ),
-                  trailing: Text(
-                    "Amount paid",
-                    style: TextStyle(fontSize: 17),
-                  ),
+                  trailing: Text("Amount paid", style: TextStyle(fontSize: 17)),
                 ),
                 const Divider(),
                 ...List.generate(
                   paymentData.length,
                   (index) => ListTile(
                     title: Text(
-                      formatDate(
-                        DateTime.parse(paymentData[index].month),
-                      ),
-                      style:  TextStyles(context).getRegularStyle().copyWith(fontSize: 16),
+                      formatDate(DateTime.parse(paymentData[index].month)),
+                      style: TextStyles(
+                        context,
+                      ).getRegularStyle().copyWith(fontSize: 16),
                     ),
                     subtitle: Text(
-                      formatTime(
-                        DateTime.parse(paymentData[index].month),
-                      ),
-                      style: TextStyles(context).getDescriptionStyle().copyWith(fontSize: 16),
+                      formatTime(DateTime.parse(paymentData[index].month)),
+                      style: TextStyles(
+                        context,
+                      ).getDescriptionStyle().copyWith(fontSize: 16),
                     ),
                     trailing: Text(
                       paymentData[index].payment.toString(),
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           );

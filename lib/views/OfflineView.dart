@@ -1,4 +1,4 @@
-import 'package:nyumbayo_app/tools/Reload.dart';
+import '/tools/Reload.dart';
 
 import '/exports/exports.dart';
 
@@ -24,36 +24,23 @@ class _OfflineViewState extends State<OfflineView> {
               width: 300,
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           const Text(
             'You are offline',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           const Text(
             'Please check your internet connection',
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-            ),
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-            ReloadApp.restartApp(context);
+              ReloadApp.restartApp(context);
             },
             child: const Text('Retry'),
           ),
-          
         ],
       ),
     );

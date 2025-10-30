@@ -1,7 +1,5 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
-import 'dart:developer';
-
 import '../../backend/auth.dart';
 import '/exports/exports.dart';
 
@@ -13,8 +11,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  EdgeInsets padding =
-      const EdgeInsets.only(top: 5, right: 15, left: 15, bottom: 2);
+  EdgeInsets padding = const EdgeInsets.only(
+    top: 5,
+    right: 15,
+    left: 15,
+    bottom: 2,
+  );
   //
   bool _showpass = false;
   final emailController = TextEditingController();
@@ -38,9 +40,10 @@ class _LoginState extends State<Login> {
                 child: Text(
                   "Login",
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      fontSize: 50,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w200),
+                    fontSize: 50,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w200,
+                  ),
                 ),
               ),
               AspectRatio(
@@ -67,10 +70,7 @@ class _LoginState extends State<Login> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Text(
-                  _msg,
-                  style: const TextStyle(color: Colors.red),
-                ),
+                child: Text(_msg, style: const TextStyle(color: Colors.red)),
               ),
               CommonTextField(
                 enableBorder: true,
@@ -102,10 +102,7 @@ class _LoginState extends State<Login> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Text(
-                  _pw_msg,
-                  style: const TextStyle(color: Colors.red),
-                ),
+                child: Text(_pw_msg, style: const TextStyle(color: Colors.red)),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,36 +127,47 @@ class _LoginState extends State<Login> {
                       passwordController.text.isEmpty ||
                       !formKey.currentState!.validate()) {
                     showMessage(
-                        context: context,
-                        msg: "Please fill all the fields",
-                        type: 'danger');
+                      context: context,
+                      msg: "Please fill all the fields",
+                      type: 'danger',
+                    );
                   } else {
                     showProgress(context, text: "Logging in please wait...");
                     Auth.login(emailController.text, passwordController.text)
                         .then((value) {
-                      // log(value.user?.uid ??s "");
-                      Routes.pop(context);
-                      if (FirebaseAuth.instance.currentUser?.emailVerified ==
-                          false) {
-                        Routes.named(context, Routes.verify);
-                      } else {
-                        BlocProvider.of<UserdataController>(context)
-                            .captureData();
+                          // log(value.user?.uid ??s "");
+                          Routes.pop(context);
+                          if (FirebaseAuth
+                                  .instance
+                                  .currentUser
+                                  ?.emailVerified ==
+                              false) {
+                            Routes.named(context, Routes.verify);
+                          } else {
+                            BlocProvider.of<UserdataController>(
+                              context,
+                            ).captureData();
 
-                        Routes.routeUntil(context, Routes.dashboard);
-                        showMessage(
-                            context: context, msg: "Logged in Successfully");
-                      }
-                    }).onError((error, x) {
-                      Routes.pop(context);
-                      showMessage(
-                          context: context,
-                          msg: error.toString(),
-                          type: 'danger');
-                    }).whenComplete(() {
-                      BlocProvider.of<UserdataController>(context)
-                          .captureData();
-                    });
+                            Routes.routeUntil(context, Routes.dashboard);
+                            showMessage(
+                              context: context,
+                              msg: "Logged in Successfully",
+                            );
+                          }
+                        })
+                        .onError((error, x) {
+                          Routes.pop(context);
+                          showMessage(
+                            context: context,
+                            msg: error.toString(),
+                            type: 'danger',
+                          );
+                        })
+                        .whenComplete(() {
+                          BlocProvider.of<UserdataController>(
+                            context,
+                          ).captureData();
+                        });
                   }
                 },
               ),

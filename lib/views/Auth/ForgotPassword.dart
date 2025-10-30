@@ -1,6 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors
 
-import 'package:nyumbayo_app/backend/auth.dart';
+import '/backend/auth.dart';
 
 import '../../tools/index.dart';
 import '../../widgets/Validator.dart';
@@ -26,13 +26,12 @@ class _ForgotPasswordState extends State<ForgotPassword>
     );
     forgotController!.forward();
   }
-EdgeInsets pad = const EdgeInsets.only(
-                        left: 24, right: 24, bottom: 24);
+
+  EdgeInsets pad = const EdgeInsets.only(left: 24, right: 24, bottom: 24);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-      
         child: BottomTopMoveAnimationView(
           animationController: forgotController!,
           child: ListView(
@@ -42,67 +41,77 @@ EdgeInsets pad = const EdgeInsets.only(
               appBar(),
               AspectRatio(
                 aspectRatio: 1.7,
-                child: SvgPicture.asset(
-                  "assets/images/forgot_pass.svg",
-                ),
+                child: SvgPicture.asset("assets/images/forgot_pass.svg"),
               ),
-                Padding(
-                      padding: const EdgeInsets.only(
-                          top: 16.0, bottom: 10.0, left: 24, right: 24),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              "Provide an email address that was registered at the time of creating your account.",
-                              textAlign: TextAlign.start,
-                              style: TextStyles(context)
-                                  .getDescriptionStyle()
-                                  .copyWith(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: Theme.of(context).disabledColor,
-                                  ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 16.0,
+                  bottom: 10.0,
+                  left: 24,
+                  right: 24,
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        "Provide an email address that was registered at the time of creating your account.",
+                        textAlign: TextAlign.start,
+                        style: TextStyles(context)
+                            .getDescriptionStyle()
+                            .copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).disabledColor,
                             ),
-                          ),
-                        ],
                       ),
                     ),
+                  ],
+                ),
+              ),
               ...[
-                Space(space: 0.03,),
-                  CommonTextField(
-                    fieldColor: Theme.of(context).cardColor,
-                    controller: _emailController,
-                    icon: Icons.email_outlined,
-                    titleText:
-                        "Email address", //AppLocalizations(context).of("your_mail"),
-                    errorText: _errorEmail,
-                    isObscureText: false,
-                    padding: pad,
-                    hintText: "Enter your email",
-                    keyboardType: TextInputType.emailAddress,
-                    onChanged: (String txt) {},
-                  ),
-                  CommonButton(
-                    padding: pad,
-                    buttonText:
-                        "Send Email Request",
-                    onTap: () {
-                      if (_allValidation()){
-                        showProgress(context, text:"Sending email request",);
-                       Auth.resetPassword(email: _emailController.text.trim()).then((value) {
+                Space(space: 0.03),
+                CommonTextField(
+                  fieldColor: Theme.of(context).cardColor,
+                  controller: _emailController,
+                  icon: Icons.email_outlined,
+                  titleText:
+                      "Email address", //AppLocalizations(context).of("your_mail"),
+                  errorText: _errorEmail,
+                  isObscureText: false,
+                  padding: pad,
+                  hintText: "Enter your email",
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (String txt) {},
+                ),
+                CommonButton(
+                  padding: pad,
+                  buttonText: "Send Email Request",
+                  onTap: () {
+                    if (_allValidation()) {
+                      showProgress(context, text: "Sending email request");
+                      Auth.resetPassword(
+                        email: _emailController.text.trim(),
+                      ).then((value) {
                         Routes.pop(context);
-                         if(AuthStatus.values.contains(value)){
-                           showMessage(context:context, msg: "Email sent successfully",type: 'success');
-                           Routes.named(context, Routes.messagePage);
-                         }else{
-                           showMessage(context:context, msg: "Email not sent",type: 'danger');
-                           
-                         }
+                        if (AuthStatus.values.contains(value)) {
+                          showMessage(
+                            context: context,
+                            msg: "Email sent successfully",
+                            type: 'success',
+                          );
+                          Routes.named(context, Routes.messagePage);
+                        } else {
+                          showMessage(
+                            context: context,
+                            msg: "Email not sent",
+                            type: 'danger',
+                          );
+                        }
                       });
                     }
-                    }
-                  ),
-                ],
+                  },
+                ),
+              ],
             ],
           ),
         ),
@@ -113,9 +122,8 @@ EdgeInsets pad = const EdgeInsets.only(
   Widget appBar() {
     return CommonAppbarView(
       iconData: Icons.arrow_back,
-      titleText:
-          "Password Reset",
-          topPadding: 0,
+      titleText: "Password Reset",
+      topPadding: 0,
       onBackClick: () {
         Navigator.pop(context);
       },

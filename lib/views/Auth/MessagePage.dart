@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nyumbayo_app/exports/exports.dart';
+import '/exports/exports.dart';
 
 class MessagePage extends StatefulWidget {
   const MessagePage({super.key});
@@ -16,7 +16,10 @@ class _MessagePageState extends State<MessagePage>
   void initState() {
     super.initState();
     _controller = AnimationController(
-        vsync: this, value: 0, duration: const Duration(seconds: 3));
+      vsync: this,
+      value: 0,
+      duration: const Duration(seconds: 3),
+    );
     _controller?.forward();
   }
 
@@ -33,8 +36,9 @@ class _MessagePageState extends State<MessagePage>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AspectRatio(
-              aspectRatio: 1.7,
-              child: SvgPicture.asset("assets/images/email_verify.svg")),
+            aspectRatio: 1.7,
+            child: SvgPicture.asset("assets/images/email_verify.svg"),
+          ),
           Text(
             "Check you mail box to reset your password",
             style: TextStyles(context).getRegularStyle(),

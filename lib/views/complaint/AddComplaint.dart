@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:nyumbayo_app/views/complaint/widgets/CameraWidget.dart';
+import '/views/complaint/widgets/CameraWidget.dart';
 
 import '../../backend/complaints.dart';
 import '/exports/exports.dart';
@@ -40,10 +40,7 @@ class _AddComplaintState extends State<AddComplaint> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CommonAppbarView(
-            titlePadding: const EdgeInsets.only(
-              left: 18.0,
-              top: 10,
-            ),
+            titlePadding: const EdgeInsets.only(left: 18.0, top: 10),
             titleText: "Add Complaints",
             iconData: Icons.arrow_back,
             onBackClick: () => Routes.pop(context),
@@ -113,7 +110,10 @@ class _AddComplaintState extends State<AddComplaint> {
                     if (options == "Others")
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 28.0, right: 28, bottom: 20),
+                          left: 28.0,
+                          right: 28,
+                          bottom: 20,
+                        ),
                         child: Text(
                           "Specify",
                           style: TextStyles(context).getRegularStyle(),
@@ -140,7 +140,10 @@ class _AddComplaintState extends State<AddComplaint> {
                     const Space(space: 0.03),
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 28.0, right: 28, bottom: 20),
+                        left: 28.0,
+                        right: 28,
+                        bottom: 20,
+                      ),
                       child: Text(
                         "Description",
                         style: TextStyles(context).getRegularStyle(),
@@ -150,19 +153,18 @@ class _AddComplaintState extends State<AddComplaint> {
                     Padding(
                       padding: const EdgeInsets.only(left: 28.0, right: 28),
                       child: TextFormField(
-                          controller: _descriptionController,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            floatingLabelAlignment:
-                                FloatingLabelAlignment.start,
-                            hintText: "Provide a description of your complaint",
-                            hintTextDirection: TextDirection.ltr,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            hintStyle:
-                                TextStyles(context).getDescriptionStyle(),
-                          )),
+                        controller: _descriptionController,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          floatingLabelAlignment: FloatingLabelAlignment.start,
+                          hintText: "Provide a description of your complaint",
+                          hintTextDirection: TextDirection.ltr,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          hintStyle: TextStyles(context).getDescriptionStyle(),
+                        ),
+                      ),
                     ),
                     // image upload widget
                     Padding(
@@ -206,44 +208,43 @@ class _AddComplaintState extends State<AddComplaint> {
                         TapEffect(
                           onClick: () {
                             showModalBottomSheet(
-                                backgroundColor: Colors.transparent,
-                                context: context,
-                                builder: (context) {
-                                  return BottomSheet(
-                                      backgroundColor: Colors.transparent,
-                                      onClosing: () {},
-                                      builder: (context) {
-                                        return Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              2,
-                                          decoration: const BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(30),
-                                              topRight: Radius.circular(30),
-                                            ),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(18.0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                CameraWidget(
-                                                  onClick: () {
-                                                    uploadImage().then((value) {
+                              backgroundColor: Colors.transparent,
+                              context: context,
+                              builder: (context) {
+                                return BottomSheet(
+                                  backgroundColor: Colors.transparent,
+                                  onClosing: () {},
+                                  builder: (context) {
+                                    return Container(
+                                      height:
+                                          MediaQuery.of(context).size.width / 2,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          topRight: Radius.circular(30),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(18.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            CameraWidget(
+                                              onClick: () {
+                                                uploadImage()
+                                                    .then((value) {
                                                       setState(() {
-                                                        _base64Image =
-                                                            base64Encode(
+                                                        _base64Image = base64Encode(
                                                           value
                                                               .readAsBytesSync(),
                                                         );
                                                         _byteImage = value
                                                             .readAsBytesSync();
                                                       });
-                                                    }).whenComplete(() {
+                                                    })
+                                                    .whenComplete(() {
                                                       showMessage(
                                                         context: context,
                                                         msg:
@@ -252,22 +253,24 @@ class _AddComplaintState extends State<AddComplaint> {
                                                       );
                                                       Routes.pop(context);
                                                     });
-                                                  },
-                                                  title: "Camera",
-                                                  icon: Icons.camera_sharp,
-                                                ),
-                                                CameraWidget(
-                                                  onClick: () {
-                                                    captureImage()
-                                                        .then((value) {
+                                              },
+                                              title: "Camera",
+                                              icon: Icons.camera_sharp,
+                                            ),
+                                            CameraWidget(
+                                              onClick: () {
+                                                captureImage()
+                                                    .then((value) {
                                                       setState(() {
-                                                        _base64Image =
-                                                            base64Encode(value
-                                                                .readAsBytesSync());
+                                                        _base64Image = base64Encode(
+                                                          value
+                                                              .readAsBytesSync(),
+                                                        );
                                                         _byteImage = value
                                                             .readAsBytesSync();
                                                       });
-                                                    }).whenComplete(() {
+                                                    })
+                                                    .whenComplete(() {
                                                       showMessage(
                                                         context: context,
                                                         msg:
@@ -276,26 +279,24 @@ class _AddComplaintState extends State<AddComplaint> {
                                                       );
                                                       Routes.pop(context);
                                                     });
-                                                  },
-                                                  title: "Gallery",
-                                                  icon: Icons
-                                                      .photo_library_rounded,
-                                                )
-                                              ],
+                                              },
+                                              title: "Gallery",
+                                              icon: Icons.photo_library_rounded,
                                             ),
-                                          ),
-                                        );
-                                      });
-                                });
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            );
                           },
                           child: const Padding(
                             padding: EdgeInsets.only(left: 25.0, right: 45),
                             child: CircleAvatar(
                               radius: 40,
-                              child: Icon(
-                                Icons.attachment,
-                                size: 40,
-                              ),
+                              child: Icon(Icons.attachment, size: 40),
                             ),
                           ),
                         ),
@@ -341,9 +342,10 @@ class _AddComplaintState extends State<AddComplaint> {
                           }).then((value) {
                             Routes.pop(context);
                             showMessage(
-                                context: context,
-                                msg: "Complaint Submitted successfully",
-                                type: "success");
+                              context: context,
+                              msg: "Complaint Submitted successfully",
+                              type: "success",
+                            );
                             Routes.pop(context);
                           });
                           // end of submitting of complaint
@@ -356,7 +358,7 @@ class _AddComplaintState extends State<AddComplaint> {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

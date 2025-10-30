@@ -1,4 +1,4 @@
-import 'package:nyumbayo_app/APIS/Api.dart';
+import '/APIS/Api.dart';
 
 import '../exports/exports.dart';
 
@@ -18,11 +18,9 @@ class MainController extends ChangeNotifier {
   bool get online => _online;
   // setter
   void setPower(String id) {
-    FirebaseFirestore.instance
-        .collection("tenants")
-        .doc(id)
-        .get()
-        .then((value) {
+    FirebaseFirestore.instance.collection("tenants").doc(id).get().then((
+      value,
+    ) {
       //  _power = (value.data()?["power_status"] == "on" || value.data()?["landlord_power_control"] == "on");
       if (value.data()?["power_status"] == "on" ||
           value.data()?["landlord_power_control"] == "on") {
@@ -44,14 +42,18 @@ class MainController extends ChangeNotifier {
     if (x == 1) {
       // function to trigger power off or on for the tenant
       Api.controlPower("1");
-      FirebaseFirestore.instance.collection("tenants").doc(id).update({
-        "power_status": percentage < 80 ? "off" : "on",
-      }).then((value) {});
+      FirebaseFirestore.instance
+          .collection("tenants")
+          .doc(id)
+          .update({"power_status": percentage < 80 ? "off" : "on"})
+          .then((value) {});
     } else {
       Api.controlPower("0");
-      FirebaseFirestore.instance.collection("tenants").doc(id).update({
-        "power_status": percentage < 80 ? "off" : "on",
-      }).then((value) {});
+      FirebaseFirestore.instance
+          .collection("tenants")
+          .doc(id)
+          .update({"power_status": percentage < 80 ? "off" : "on"})
+          .then((value) {});
     }
   }
 
@@ -63,8 +65,10 @@ class MainController extends ChangeNotifier {
       } else {
         double totalUnits = value.getDouble("units") ?? 0.0;
         Api.getPowerConsumed().then((units) {
-          totalUnits += double.parse(units.isEmpty || units == "?" ? "0.0" : units);
-           value.setDouble("units", totalUnits);
+          totalUnits += double.parse(
+            units.isEmpty || units == "?" ? "0.0" : units,
+          );
+          value.setDouble("units", totalUnits);
           _powerConsumed = totalUnits;
           notifyListeners();
         });
@@ -77,23 +81,20 @@ class MainController extends ChangeNotifier {
     return (units * 500);
   }
 
-// property name
+  // property name
   void propertyName(String name) {
-    FirebaseFirestore.instance
-        .collection('properties')
-        .doc(name)
-        .get()
-        .then((value) {
+    FirebaseFirestore.instance.collection('properties').doc(name).get().then((
+      value,
+    ) {
       _property = value.data()?['name'] ?? "";
       notifyListeners();
     });
   }
 
   checkOnline() {
-    InternetConnectionChecker.createInstance()
-        .hasConnection
-        .asStream()
-        .listen((event) {
+    InternetConnectionChecker.createInstance().hasConnection.asStream().listen((
+      event,
+    ) {
       _online = event;
       notifyListeners();
     });
