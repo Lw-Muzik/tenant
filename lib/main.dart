@@ -56,10 +56,6 @@ Future<void> main() async {
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
   FirebaseMessaging.onMessage.listen((event) {});
 
-  // end of firebase messaging
-  Timer.periodic(const Duration(seconds: 7), (timer) {
-    // sendNotification();  Maurice256
-  });
   Bloc.observer = const Observer();
   runApp(
     ReloadApp(
